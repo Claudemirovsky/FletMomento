@@ -20,7 +20,7 @@ class Horario(ft.Column):
             ]),
             ft.Row([
                 ft.Text(value="Horário:", width=60, color=ft.Colors.BLACK),
-                ft.ElevatedButton(value="00:00", on_click=chooseTime)
+                ft.ElevatedButton("Escolher horário", on_click=chooseTime)
             ]),
             ft.Row([
                 ft.Button(text="Cancelar", on_click=cancel),
