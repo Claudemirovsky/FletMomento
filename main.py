@@ -1,70 +1,113 @@
 import flet as ft
-import time
-
-
-class Criar(ft.Button):
-    def __init__(self, on_click):
-        super().__init__()
-        self.text = "Criar horário"
-        self.on_click = on_click
-
-
-class Horario(ft.Column):
-    def __init__(self, cancel, confirm, chooseTime):
-        super().__init__()
-        self.controls = [
-            ft.Text(value="Adicionar horário", color=ft.Colors.BLACK, size=20),
-            ft.Row([
-                ft.Text(value="Nome: ", width=60, color=ft.Colors.BLACK),
-                ft.TextField()
-            ]),
-            ft.Row([
-                ft.Text(value="Horário:", width=60, color=ft.Colors.BLACK),
-                ft.ElevatedButton("Escolher horário", on_click=chooseTime)
-            ]),
-            ft.Row([
-                ft.Button(text="Cancelar", on_click=cancel),
-                ft.Button(text="Confirmar")
-            ])
-        ]
-
 
 def main(page: ft.Page):
 
-    def scheduleCreate(horario: "Horario"):
-        page.remove_at(-1)
-        page.add(ft.Container(
-            content=Horario(cancel, confirm, chooseTime),
-            bgcolor=ft.Colors.WHITE,
+    YELLOW="#FEC562"
+    BLUE="#4A92FF"
+    GREY="#F5FFF5"
+    DARK_BLUE="#0B2E4F"
+
+    login = ft.Card(
+        content=ft.Container(
+            content=ft.Column(
+                [
+                    #Titulo
+                    ft.Column(
+                        [
+                            ft.Row(
+                                [
+                                    ft.Text(value="TIME", color=BLUE, weight=ft.FontWeight.BOLD, size=40),
+                                    ft.Text(value= "WISE", color=YELLOW,
+                                    weight=ft.FontWeight.BOLD, size=40)
+                                ],
+                                spacing=0,
+                                alignment=ft.MainAxisAlignment.CENTER
+                            ),
+                            ft.Text("Organize, estude, conquiste!", weight=ft.FontWeight.BOLD, size=16, color=DARK_BLUE)
+                        ],
+                        spacing=0,
+                        horizontal_alignment=ft.CrossAxisAlignment.CENTER
+                    ),
+
+                    #Email
+                    ft.Column(
+                        [
+                            ft.Text(value=" Email", color=DARK_BLUE, weight=ft.FontWeight.BOLD, size=16),
+                            ft.TextField(
+                                hint_text="seuemail@email.com.br", 
+                                width=330, 
+                                border_color=BLUE, 
+                                border_radius=10, 
+                                hint_style=ft.TextStyle(color=BLUE))
+                        ],
+                        spacing=4
+                    ),
+
+                    #Senha
+                    ft.Column(
+                        [
+                            ft.Text(value=" Senha", color=DARK_BLUE, weight=ft.FontWeight.BOLD, size=16,),
+                            ft.TextField(
+                                hint_text="•••••••", 
+                                width=330, 
+                                border_color=BLUE, 
+                                border_radius=10, 
+                                hint_style=ft.TextStyle(color=BLUE),
+                                password=True)
+                        ],
+                        spacing=4
+                    ),
+
+                    #Lembre-se
+                    ft.Row(
+                        [
+                            ft.Checkbox(label="Lembre-se de mim", label_style=ft.TextStyle(color=DARK_BLUE, size=12)),
+                            ft.TextButton(content=ft.Text(value="Esqueceu sua senha?", text_align=ft.TextAlign.RIGHT, style=ft.TextStyle(decoration=ft.TextDecoration.UNDERLINE, size=12), color=DARK_BLUE))
+                            ]
+                    ),
+
+                    #Entrar
+                    ft.ElevatedButton(content=ft.Text(value="ENTRAR", color=ft.Colors.WHITE, size=16, weight=ft.FontWeight.BOLD), bgcolor=YELLOW, width=330, height=48),
+
+                    #Não tem conta ainda
+                    ft.Row(
+                        [
+                            ft.Text(value="Não tem conta?", color=DARK_BLUE, weight=ft.FontWeight.BOLD, size=16),
+                            ft.TextButton(content=ft.Text(value="Crie agora", text_align=ft.TextAlign.RIGHT, style=ft.TextStyle(decoration=ft.TextDecoration.UNDERLINE, size=16), color=BLUE))
+                        ],
+                        spacing=0,
+                        alignment=ft.MainAxisAlignment.CENTER
+                    ),
+
+                    #Ou entre com
+                    ft.Text(value="Ou entre com", color=DARK_BLUE, size=20, weight=ft.FontWeight.BOLD)
+
+                    #Icones
+
+                ],
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+            ),
             alignment=ft.alignment.center,
-            margin=10,
-            padding=20,
-            width=450,
-            height=250,
-            border_radius=16)
-        )
-
-    def timeChosen(e):
-        print({time_picker.value})
-
-    def chooseTime(e):
-        page.open(time_picker)
-
-    def cancel(criar: "Criar"):
-        page.remove_at(-1)
-        page.add(Criar(on_click=scheduleCreate))
-
-    def confirm(criar: "Criar"):
-        pass
-
-    time_picker = ft.TimePicker(
-        confirm_text="Confirmar",
-        error_invalid_text="Horário inválido",
-        help_text="Escolha um horário carniça",
-        on_change=timeChosen
+            padding=20
+        ),
+        width=400,
+        height=600,
+        color=GREY
     )
 
-    page.add(Criar(on_click=scheduleCreate))
 
+    '''page.add(
+        ft.Container(
+            gradient=ft.LinearGradient(
+                begin=ft.alignment.top_center,
+                end=ft.alignment.bottom_center,
+                colors=[ft.colors.GREEN, BLUE]
+            ),
+            content=ft.Text("Vão se foderem")
+        )
+    )'''
+    page.bgcolor = BLUE
+    page.horizontal_alignment=ft.CrossAxisAlignment.CENTER
+    page.add(ft.SafeArea(content=login))
 
 ft.app(main)
