@@ -137,7 +137,7 @@ def main(page: ft.Page):
                                         ft.Text(
                                             value="Não tem conta?", color=DARK_BLUE, weight=ft.FontWeight.BOLD, size=16),
                                         ft.TextButton(content=ft.Text(value="Crie agora", text_align=ft.TextAlign.RIGHT, style=ft.TextStyle(
-                                            decoration=ft.TextDecoration.UNDERLINE, size=16), color=BLUE))
+                                            decoration=ft.TextDecoration.UNDERLINE, size=16), color=BLUE), on_click=lambda _: page.go("register"))
                                     ],
                                     spacing=0,
                                     alignment=ft.MainAxisAlignment.CENTER
@@ -154,7 +154,7 @@ def main(page: ft.Page):
                                     [
                                         ft.Container(
                                             content=ft.Image(
-                                                src=f"social.png", fit=ft.ImageFit.COVER, color_blend_mode=ft.BlendMode.EXCLUSION),
+                                                src=f"social.png", fit=ft.ImageFit.COVER),
                                             margin=10,
                                             padding=10,
                                             bgcolor=BLUE,
@@ -164,7 +164,7 @@ def main(page: ft.Page):
                                         ),
                                         ft.Container(
                                             content=ft.Image(
-                                                src=f"instagram.png", fit=ft.ImageFit.COVER, color_blend_mode=ft.BlendMode.EXCLUSION),
+                                                src=f"instagram.png", fit=ft.ImageFit.COVER),
                                             margin=10,
                                             padding=10,
                                             bgcolor=BLUE,
@@ -174,7 +174,7 @@ def main(page: ft.Page):
                                         ),
                                         ft.Container(
                                             content=ft.Image(
-                                                src=f"twitter.png", fit=ft.ImageFit.COVER, color_blend_mode=ft.BlendMode.EXCLUSION),
+                                                src=f"twitter.png", fit=ft.ImageFit.COVER),
                                             margin=10,
                                             padding=10,
                                             bgcolor=BLUE,
@@ -201,6 +201,113 @@ def main(page: ft.Page):
         ]
     )
 
+    register = ft.View(
+        route="register",
+        bgcolor=ft.Colors.TRANSPARENT,
+        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+        decoration=ft.BoxDecoration(
+            gradient=ft.LinearGradient(
+                begin=ft.alignment.top_center,
+                end=ft.alignment.bottom_center,
+                colors=[BLUE, "#2C5899"],
+                stops=[0.0, 0.86]
+            )
+        ),
+        controls=[
+            ft.SafeArea(
+                content=ft.Card(
+                    content=ft.Container(
+                        content=ft.Column(
+                            [
+                                # Titulo
+                                ft.Column(
+                                    [
+                                        ft.Row(
+                                            [
+                                                ft.Text(
+                                                    value="TIME", color=BLUE, weight=ft.FontWeight.BOLD, size=40),
+                                                ft.Text(value="WISE", color=YELLOW,
+                                                        weight=ft.FontWeight.BOLD, size=40)
+                                            ],
+                                            spacing=0,
+                                            alignment=ft.MainAxisAlignment.CENTER
+                                        ),
+                                        ft.Text(
+                                            "Organize, estude, conquiste!", weight=ft.FontWeight.BOLD, size=16, color=DARK_BLUE)
+                                    ],
+                                    spacing=0,
+                                    horizontal_alignment=ft.CrossAxisAlignment.CENTER
+                                ),
+
+                                # Nome
+                                ft.Column(
+                                    [
+                                        ft.Text(value=" Nome", color=DARK_BLUE,
+                                                weight=ft.FontWeight.BOLD, size=16),
+                                        ft.TextField(
+                                            color=BLUE,
+                                            hint_text="Nome de usuário",
+                                            width=330,
+                                            border_color=BLUE,
+                                            border_radius=10,
+                                            hint_style=ft.TextStyle(color=BLUE))
+                                    ],
+                                    spacing=4
+                                ),
+
+                                # Email
+                                ft.Column(
+                                    [
+                                        ft.Text(value=" Email", color=DARK_BLUE,
+                                                weight=ft.FontWeight.BOLD, size=16),
+                                        ft.TextField(
+                                            color=BLUE,
+                                            hint_text="seuemail@email.com.br",
+                                            width=330,
+                                            border_color=BLUE,
+                                            border_radius=10,
+                                            hint_style=ft.TextStyle(color=BLUE))
+                                    ],
+                                    spacing=4
+                                ),
+
+                                # Senha
+                                ft.Column(
+                                    [
+                                        ft.Text(value=" Senha", color=DARK_BLUE,
+                                                weight=ft.FontWeight.BOLD, size=16,),
+                                        ft.TextField(
+                                            color=BLUE,
+                                            hint_text="•••••••",
+                                            width=330,
+                                            border_color=BLUE,
+                                            border_radius=10,
+                                            hint_style=ft.TextStyle(
+                                                color=BLUE),
+                                            password=True)
+                                    ],
+                                    spacing=4
+                                ),
+
+                                # Entrar
+                                ft.ElevatedButton(content=ft.Text(value="CONFIRMAR", color=ft.Colors.WHITE, size=16, weight=ft.FontWeight.BOLD),
+                                                  bgcolor=YELLOW, width=330, height=48, on_click=lambda _: page.go("main")),
+
+                            ],
+                            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                            alignment=ft.MainAxisAlignment.CENTER
+                        ),
+                        alignment=ft.alignment.center,
+                        padding=20
+                    ),
+                    width=400,
+                    height=700,
+                    color=GREY,
+                )
+            )
+        ]
+    )
+
     main = ft.View(
         route="main",
         bgcolor=ft.Colors.TRANSPARENT,
@@ -212,6 +319,8 @@ def main(page: ft.Page):
                 colors=[BLUE, "#2C5899"]
             )
         ),
+        floating_action_button = ft.FloatingActionButton(icon=ft.Icons.ADD, shape=ft.CircleBorder(), bgcolor=YELLOW, foreground_color=GREY),
+        floating_action_button_location = ft.FloatingActionButtonLocation.CENTER_DOCKED,
         controls=[
             ft.AppBar(
                 bgcolor=GREY,
@@ -261,7 +370,20 @@ def main(page: ft.Page):
                 ],
                 alignment=ft.MainAxisAlignment.CENTER,
                 vertical_alignment=ft.CrossAxisAlignment.START
-            )
+            ),
+            ft.BottomAppBar(
+                bgcolor=GREY,
+                shape=ft.NotchShape.CIRCULAR,
+                content=ft.Row(
+                    [
+                        ft.IconButton(icon=ft.Icons.PERSON, icon_color=DARK_BLUE, icon_size=60),
+                        ft.Container(expand=True),
+                        ft.IconButton(icon=ft.Icons.SETTINGS, icon_color=DARK_BLUE, icon_size=60),
+                    ],
+                    alignment=ft.MainAxisAlignment.SPACE_EVENLY,
+                ),
+                padding=ft.padding.symmetric(horizontal=50)
+            ),
         ]
     )
 
@@ -270,6 +392,8 @@ def main(page: ft.Page):
         page.views.append(login)
         if page.route == "main":
             page.views.append(main)
+        if page.route == "register":
+            page.views.append(register)
         page.update()
 
     def view_pop(view):
